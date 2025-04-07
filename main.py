@@ -11,13 +11,16 @@ def init_game ():
     pygame.display.set_caption(config.TITLE)
     return screen
 
-def draw_text(screen, font_pose, text='No text', font_size=10, font_name='DejaVuSans.ttf', font_color= (0,0,0), italic=False, bold=False):
+def draw_text(screen, font_pose, text='No text', font_size=10, font_name='DejaVuSans.ttf', font_color= (0,0,0), italic=False, bold=False, rotation=0):
     pygame.font.init()
     font = pygame.font.Font(font_name, font_size)
     font.set_italic(italic)
     font.set_bold(bold)
-    img = font.render(text, False, font_color)
-    screen.blit(img, font_pose)
+    text_surface = font.render(text, True, font_color)
+    if rotation != 0:
+        text_surface = pygame.transform.rotate(text_surface, rotation)
+    text_rect = text_surface.get_rect(center=(font_pose))
+    screen.blit(text_surface, text_rect.topleft)
 
 def handle_events ():
     for event in pygame.event.get():
@@ -30,7 +33,7 @@ def handle_events ():
 def main():
     screen = init_game()
     clock = pygame.time.Clock() # Initialize the clock here
-
+    rotation = 0
    # ball = shapes.Circ(screen, config.GOLD, [600,400], 100, 5)
     x1 = 50
     y1 = 50
@@ -45,18 +48,19 @@ def main():
     while running:
         running = handle_events()
         screen.fill(config.WHITE) # Use color from config
+        rotation += 10
         x1 += change_x1
         y1 += change_y1
 
 
-        if x1 + size_x> config.WINDOW_WIDTH or x1 < 0:
+        if x1 + size_x> config.WINDOW_WIDTH or x1 - 50 < 0:
             change_x1 = change_x1 * -1
-        if y1 + size_y> config.WINDOW_HEIGHT or y1 < 0:
+        if y1 + size_y> config.WINDOW_HEIGHT or y1 - 50 < 0:
             change_y1 = change_y1 * -1
 
        # ball.draw()
         #box.draw()
-        pygame.draw.rect(screen,config.RICHMAROON,[x1,y1,size_x,size_y])
+        draw_text(screen, [x1,y1], 'SPINNN', 50, font_color=config.RICHMAROON, rotation=rotation)
         pygame.display.flip()
         
         # Limit the frame rate to the specified frames per second (FPS)
