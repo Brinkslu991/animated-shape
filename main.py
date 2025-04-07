@@ -32,19 +32,31 @@ def main():
     clock = pygame.time.Clock() # Initialize the clock here
 
    # ball = shapes.Circ(screen, config.GOLD, [600,400], 100, 5)
-    x1 = 100
-    y1 = 100
-    box = shapes.Rect(screen, config.ELECTRICLIME, x1 ,y1 ,200 ,300 , 10)
+    x1 = 50
+    y1 = 50
+    size_x = 100
+    size_y = 100
+    change_x1 = 5
+    change_y1 = 5
+    #box = shapes.Rect(screen, config.ELECTRICLIME, x1 ,y1 ,200 , 300, 10)
+
 
     running = True
     while running:
         running = handle_events()
         screen.fill(config.WHITE) # Use color from config
-        x1 += 10
-        y1 += 10
+        x1 += change_x1
+        y1 += change_y1
+
+
+        if x1 + size_x> config.WINDOW_WIDTH or x1 < 0:
+            change_x1 = change_x1 * -1
+        if y1 + size_y> config.WINDOW_HEIGHT or y1 < 0:
+            change_y1 = change_y1 * -1
+
        # ball.draw()
-        box.draw()
-        pygame.draw.rect(screen,config.RICHMAROON,[x1,y1,100,200])
+        #box.draw()
+        pygame.draw.rect(screen,config.RICHMAROON,[x1,y1,size_x,size_y])
         pygame.display.flip()
         
         # Limit the frame rate to the specified frames per second (FPS)
