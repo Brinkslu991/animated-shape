@@ -60,7 +60,7 @@ def main():
 
        # ball.draw()
         #box.draw()
-        draw_text(screen, [x1,y1], 'SPINNNNNNNNNNNNNNNNNNNNNNNNN', 50, font_color=config.RICHMAROON, rotation=rotation)
+        draw_text(screen, [x1,y1], 'SPINNNN?', 50, font_color=config.RICHMAROON, rotation=rotation)
         pygame.display.flip()
         
         # Limit the frame rate to the specified frames per second (FPS)
